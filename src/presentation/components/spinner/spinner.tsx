@@ -4,9 +4,11 @@ import Styles from './spinner-styles.scss'
 type Props = React.HTMLAttributes<HTMLDivElement>
 
 const Spinner: React.FC<Props> = (props: Props) => {
-  return (<div {...props} className={[Styles.spinner, props.className].join(' ')}>
-    <div /><div /><div /><div />
-  </div>)
+  return (
+    <div data-testid="spinner" {...props} className={[Styles.spinner, props.className].join(' ')}>
+      <div /><div /><div /><div />
+    </div>
+  )
 }
 
 export default Spinner
