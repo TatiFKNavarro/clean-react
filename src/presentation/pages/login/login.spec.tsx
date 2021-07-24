@@ -131,7 +131,7 @@ describe(('Login Component'), () => {
   test('Should present error if Authentication fails', async () => {
     const { sut, authenticationSpy } = makeSut()
     const error = new InvalidCredentialsError()
-    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
+    jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
     // aguardar o elemento do dom mudar, por causa do async
     await simulateValidSubmit(sut)
     testElementText(sut, 'main-error', error.message)
