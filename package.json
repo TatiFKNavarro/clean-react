@@ -11,6 +11,7 @@
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "test:cypress": "cypress open",
+    "lint": "eslint \"src/**\"",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "check": "npx npm-check -u s"
