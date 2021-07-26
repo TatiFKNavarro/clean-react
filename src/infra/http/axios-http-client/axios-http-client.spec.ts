@@ -64,5 +64,14 @@ describe('AxiosHttpclient', () => {
         body: axiosResponse.data
       })
     })
+
+    test('Should return the correct error on axios.get', async () => {
+      const { sut, mockedAxios } = makeSut()
+      mockedAxios.get.mockRejectedValueOnce({
+        response: mockHttpResponse()
+      })
+      const promise = sut.get(mockPostRequest())
+      expect(promise).toEqual(mockedAxios.get.mock.results[0].value)
+    })
   })
 })
