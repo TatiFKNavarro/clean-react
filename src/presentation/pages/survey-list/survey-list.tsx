@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Footer, Header } from '@/presentation/components'
 import { LoadSurveyList } from '@/domain/usecases'
-import { UseErrorHandler } from '@/presentation/hooks'
+import { useErrorHandler } from '@/presentation/hooks'
 import { SurveyContext, SurveyListItem, Error } from './components'
 import Styles from './survey-list-styles.scss'
 
@@ -10,7 +10,7 @@ type Props = {
 }
 
 const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
-  const handleError = UseErrorHandler((error: Error) => {
+  const handleError = useErrorHandler((error: Error) => {
     setState({ ...state, error: error.message })
   })
   const [state, setState] = useState({
