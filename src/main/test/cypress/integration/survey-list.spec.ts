@@ -14,8 +14,8 @@ describe('SurveyList', () => {
   })
 
   it('Should logout on AccessDeniedError', () => {
-    Http.mockUnexpectedError()
+    Http.mockAccessDeniedError()
     cy.visit('')
-    cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
+    Helper.testUrl('/login')
   })
 })
