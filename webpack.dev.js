@@ -24,6 +24,7 @@ module.exports = merge(common, {
       }]
     }]
   },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: './public',
     // por padrão, o webpack gera o arquivo em memória, ao colocar para gerar em disco, evita alguns erros.
