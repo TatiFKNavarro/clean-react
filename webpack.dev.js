@@ -30,7 +30,8 @@ module.exports = merge(common, {
     // por padrão, o webpack gera o arquivo em memória, ao colocar para gerar em disco, evita alguns erros.
     writeToDisk: true,
     // evita que o webpack só entenda a raiz do projeto, podendo acessar as rotas diretamente
-    historyApiFallback: true
+    historyApiFallback: true,
+    port: 8080
   },
   plugins: [
     new DefinePlugin({
