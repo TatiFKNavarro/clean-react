@@ -2,7 +2,7 @@ import * as Helper from '../utils/helpers'
 import * as Http from '../utils/http-mocks'
 
 const path = /api\/surveys/
-const mockLoadSuccess = (): void => { cy.fixture('survey-result').then(surveyResult => { Http.mockOk(path, 'GET', surveyResult) }) }
+const mockLoadSuccess = (): void => { cy.fixture('load-survey-result').then(surveyResult => { Http.mockOk(path, 'GET', surveyResult) }) }
 
 describe('SurveyResult', () => {
   describe('load', () => {
@@ -66,6 +66,7 @@ describe('SurveyResult', () => {
   describe('save', () => {
     const mockUnexpectedError = (): void => Http.mockServerError(path, 'PUT')
     const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'PUT')
+    const mockSaveSuccess = (): void => { cy.fixture('save-survey-result').then(surveyResult => { Http.mockOk(path, 'PUT', surveyResult) }) }
 
     beforeEach(() => {
       cy.fixture('account').then(account => {
@@ -85,6 +86,26 @@ describe('SurveyResult', () => {
       mockAccessDeniedError()
       cy.get('li:nth-child(2)').click()
       Helper.testUrl('/login')
+    })
+
+    it('Should present survey result', () => {
+      mockSaveSuccess()
+      cy.visit('/surveys/any_id')
+      cy.get('li:nth-child(2)').click()
+      cy.getByTestId('question').should('have.text', 'Other Question')
+      cy.getByTestId('day').should('have.text', '03')
+      cy.getByTestId('month').should('have.text', 'fev')
+      cy.getByTestId('year').should('have.text', '2022')
+      cy.get('li:nth-child(1)').then(li => {
+        assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer')
+        assert.equal(li.find('[data-testid="image"]').attr('src'), 'other_image')
+        assert.equal(li.find('[data-testid="percent"]').text(), '50%')
+      })
+      cy.get('li:nth-child(2)').then(li => {
+        assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer2')
+        assert.notExists(li.find('[data-testid="image"]'))
+        assert.equal(li.find('[data-testid="percent"]').text(), '50%')
+      })
     })
   })
 })
