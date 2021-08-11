@@ -20,13 +20,12 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult, saveSurveyResult }: P
 
   const setOnAnswer = useSetRecoilState(onSurveyAnswerState)
   const onAnswer = (answer: string): void => {
-    if (state.isLoading) {
-      return
+    if (!state.isLoading) {
+      setState(old => ({ ...old, isLoading: true }))
+      saveSurveyResult.save({ answer })
+        .then(surveyResult => setState(old => ({ ...old, isLoading: false, surveyResult })))
+        .catch(handleError)
     }
-    setState(old => ({ ...old, isLoading: true }))
-    saveSurveyResult.save({ answer })
-      .then(surveyResult => setState(old => ({ ...old, isLoading: false, surveyResult })))
-      .catch(handleError)
   }
 
   const reload = (): void => {
